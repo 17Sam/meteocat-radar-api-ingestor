@@ -1,0 +1,3 @@
+__pycache__
+radarImages/*
+!radarImages/background.png

@@ -1,3 +1,4 @@
 __pycache__
+files-not-for-git
 radarImages/*
 !radarImages/background.png

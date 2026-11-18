@@ -1,4 +1,4 @@
-# MeteoCat API Ingestor
+# MeteoCat Radar API Ingestor
 Ingests XRAD+XDDE (radar + lightning) tile images from the [static meteocat API](https://static-m.meteo.cat) and stores the files locally on a folder per day.
 
 Each complete image is constituted by 9 tiles and a background map of Catalunya which can be merged using **tileMerger.py**.

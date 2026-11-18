@@ -4,6 +4,9 @@ from io import BytesIO
 import os
 
 def DownloadImages(iterations, startminute, starthour, startday, startmonth = 10, startyear = 2026):
+    success = True # Whether the images are successfully downloaded. If it fails
+                   # (usually due to no connection), returns False
+
     projectPath = os.path.dirname(os.path.abspath(__file__))
 
     xcoords = [128, 129, 130]
@@ -18,6 +21,7 @@ def DownloadImages(iterations, startminute, starthour, startday, startmonth = 10
     override = False # set this to True if you want existing saved images to be overwritten
 
     for xcoord in xcoords: # iterate through all the x coordinates within xcoords
+        if (not success): break
         for ycoord in ycoords: # iterate through all the y coordinates within ycoords
             print(f"\n*** DOWNLOADING IMAGES FROM COORDINATES [{xcoord}, {ycoord}] ***]")
 
@@ -72,7 +76,11 @@ def DownloadImages(iterations, startminute, starthour, startday, startmonth = 10
 
                 imgurl = f"https://static-m.meteo.cat/tiles/combinada/{year}/{strmonth}/{strday}/{strhour}/{strminute}/6/08/000/000/{xcoord}/000/000/{ycoord}.png"
 
-                imgdata = requests.get(imgurl).content
+                try:
+                    imgdata = requests.get(imgurl).content
+                except:
+                    success = False # Request failed. Abort and return False
+                    break
 
                 imgsdownloaded += 1
 
@@ -112,3 +120,5 @@ def DownloadImages(iterations, startminute, starthour, startday, startmonth = 10
                         day -= 1
 
                         # Day would have to change here
+    
+    return success

@@ -22,9 +22,14 @@ while True:
 
     startMinute = (targetDate.minute // 6) * 6
 
-    DownloadImages(iterations, startMinute, targetDate.hour, targetDate.day, targetDate.month, targetDate.year)
+    success = DownloadImages(iterations, startMinute, targetDate.hour, targetDate.day, targetDate.month, targetDate.year)
 
-    print("\033[31m***\033[0m Latest download starting at", targetDate, "with " + str(iterations) + " iterations \033[31m***\033[0m")
-    print("Next call in", interval, "seconds, a.k.a.", interval//3600, "hours and", interval%3600//60, "minutes")
+    if (success):
+        print("\033[31m***\033[0m Latest download starting at", targetDate, "with " + str(iterations) + " iterations \033[31m***\033[0m")
+        print("Next call in", interval, "seconds, a.k.a.", interval//3600, "hours and", interval%3600//60, "minutes")
 
-    sleep(interval)
+        sleep(interval)
+    else:
+        print("\033[31m!! Failed\033[0m to download images! Trying again in \033[31m10 minutes\033[0m.")
+
+        sleep(600) # Sleep 10 minutes

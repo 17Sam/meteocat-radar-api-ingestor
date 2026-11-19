@@ -3,9 +3,11 @@ from PIL import Image
 from io import BytesIO
 import os
 
-def DownloadImages(iterations, startminute, starthour, startday, startmonth = 10, startyear = 2026):
+def DownloadImages(iterations, startminute, starthour, startday, startmonth = 10, startyear = 2026, yieldProgress = False):
     success = True # Whether the images are successfully downloaded. If it fails
                    # (usually due to no connection), returns False
+    
+    progress = 0 # The progress of the ingestion from 0 to 1
 
     projectPath = os.path.dirname(os.path.abspath(__file__))
 
@@ -31,7 +33,6 @@ def DownloadImages(iterations, startminute, starthour, startday, startmonth = 10
             day = startday
             month = startmonth
             year = startyear
-
 
             for n in range(iterations):
                 strhour = "0" * (2 - len(str(hour))) + str(hour)
@@ -120,5 +121,10 @@ def DownloadImages(iterations, startminute, starthour, startday, startmonth = 10
                         day -= 1
 
                         # Day would have to change here
+                
+                # If asked to yield progress, do so
+                if (yieldProgress):
+                    progress = imgsdownloaded / totaliterations
+                    yield progress
     
     return success

@@ -22,7 +22,16 @@ while True:
 
     startMinute = (targetDate.minute // 6) * 6
 
+
     success = DownloadImages(iterations, startMinute, targetDate.hour, targetDate.day, targetDate.month, targetDate.year)
+
+    # Since DownloadImages uses yield, this is needed to extract success
+    while True:
+        try:
+            next(success)
+        except StopIteration as e:
+            success = e.value
+            break
 
     if (success):
         print("\033[31m***\033[0m Latest download starting at", targetDate, "with " + str(iterations) + " iterations \033[31m***\033[0m")

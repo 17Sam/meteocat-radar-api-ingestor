@@ -126,5 +126,4 @@ def DownloadImages(iterations, startminute, starthour, startday, startmonth = 10
                 if (yieldProgress):
                     progress = imgsdownloaded / totaliterations
                     yield progress
-    
     return success
